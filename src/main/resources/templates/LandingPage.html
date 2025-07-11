@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="UTF-8">
+        <title>MakersBnB</title>
+        <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    </head>
+    <body>
+        <div class="home-container">
+            <div class="auth-links">
+                <div sec:authorize="isAuthenticated()">
+                    <a href="/logout">Log out</a>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a href="/oauth2/authorization/okta" class="login-btn">Log in</a>
+                </div>
+                <div class="welcome-message" sec:authorize="isAuthenticated()">
+                    You are logged in as <span sec:authentication="principal.attributes['email']"></span>
+                </div>
+            </div>
+            <div class="home-banner">
+                <h1>Welcome to MakersBnB</h1>
+                <a class="home-btn" id="all-spaces-link" th:href="@{/spaces}">All spaces</a>
+                <h3 id="spaces" th:text="${nSpaces} + ' spaces are waiting to be discovered'"></h3>
+            </div>
+
+
+            <h3 id="past-bookings" th:text="${nBookings} + ' bookings were made last week'"></h3>
+
+            <div class="home-space-links">
+                <a class="home-btn" th:href="@{spaces/new}">List a space</a>
+            </div>
+
+            <h4>Recent reviews</h4>
+            <ul>
+                <!-- using th:each we tell Thymeleaf to render a li for each review -->
+                <li th:each="review : ${reviews}" th:text="${review}"></li>
+            </ul>
+
+            <div class="home-links">
+                <a th:href="@{/team}">Meet the team</a>
+                <a th:href="@{/contactus}">Get in touch</a>
+                <a th:href="@{/termsandconditions}">Terms and Conditions</a>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MakersBnB</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+  <div class="home-container">
+    <h1>Add a new space</h1>
+
+    <!-- I assume you added price and description columns to spaces in a previous Page -->
+    <form th:action="@{/spaces}" th:object="${space}" method="post">
+      <label th:for="name">Name:</label> <br>
+      <input type="text" th:field="*{name}"/> <br>
+      <label th:for="description">Description:</label> <br>
+      <input type="text" th:field="*{description}"/> <br>
+      <label th:for="price">Price:</label> <br>
+      <input type="number" th:field="*{price}"/> <br>
+      <label th:for="rules">Rules:</label> <br>
+      <input type="text" th:field="*{rules}"/> <br>
+      <br>
+      <input type="submit" value="Submit"/>
+      <input type="reset" value="Reset" />
+    </form>
+    <br>
+    <div class="back-link">
+      <a th:href="@{/}">← Back to homepage</a>
+    </div>
+  </div>
+</body>
+</html>

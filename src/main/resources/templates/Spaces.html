@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MakersBnB</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <div class="home-container">
+        <h1>Our spaces</h1>
+
+        <div class="search-container">
+            <form th:action="@{/spaces/search}" method="get" class="search-form">
+                <div class="search-field">
+                    <label for="searchDate">Search by available date:</label>
+                    <input type="date"
+                           id="searchDate"
+                           name="searchDate"
+                           th:value="${searchDate}"
+                           th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+                           th:max="${#temporals.format(#temporals.createNow().plusMonths(1), 'yyyy-MM-dd')}"
+                           required>
+                </div>
+                <button type="submit" class="search-btn">Search</button>
+                <a th:href="@{/spaces}" class="clear-search-btn">Clear Search</a>
+            </form>
+        </div>
+
+        <div th:if="${searchPerformed}" class="search-results-info">
+            <p th:if="${!#lists.isEmpty(listSpaces)}">
+                <strong th:text="${#lists.size(listSpaces)}"></strong> space(s) available on
+                <span th:text="${#temporals.format(searchDate, 'EEEE, dd MMMM yyyy')}"></span>
+            </p>
+            <p th:if="${#lists.isEmpty(listSpaces)}" class="no-results">
+                No spaces available on <span th:text="${#temporals.format(searchDate, 'EEEE, dd MMMM yyyy')}"></span>
+            </p>
+        </div>
+
+        <div th:if="${errorMessage}" class="error-message">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <div class="spaces-list">
+            <div class="space-item" th:each="space: ${listSpaces}">
+                <a th:href="@{/spaces/{id}(id=${space.id})}" class="article-link">
+                    <article>
+                        <h3 class="space-name" th:text="${space.name}"></h3>
+                        <p class="space-description" th:text="${space.description}"></p>
+                        <p th:text="'£' + ${space.price}"></p>
+
+                        <!-- Available dates summary -->
+                        <div class="available-dates">
+                            <h4>Available Dates:</h4>
+                            <div th:if="${#lists.isEmpty(space.availableDates)}">
+                                <p class="no-dates">No dates currently available</p>
+                            </div>
+                            <div th:unless="${#lists.isEmpty(space.availableDates)}">
+                                <p>We have space in the next 30 days!</p>
+                            </div>
+                        </div>
+                    </article>
+                </a>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(listSpaces) and !searchPerformed and !errorMessage}" class="no-spaces">
+            <p>No spaces available at the moment.</p>
+        </div>
+
+        <div class="back-link">
+            <a th:href="@{/}">← Back to homepage</a>
+        </div>
+    </div>
+</body>
+</html>

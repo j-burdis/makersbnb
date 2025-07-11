@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MakersBnB</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+  </head>
+  <body>
+      <div class="home-container">
+            <h2>Our team</h2>
+                <article th:each="staff: ${listStaff}">
+                    <h3 th:text="${staff.name}"></h3>
+                    <p th:text="'Role: ' + ${staff.role}"></p>
+                </article>
+
+            <div>
+                <a th:href="@{/}">Back to homepage</a>
+            </div>
+      </div>
+  </body>
+</html>

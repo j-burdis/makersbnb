@@ -1,0 +1,1 @@
+CREATE TABLE bookings (id bigserial PRIMARY KEY, name varchar(100));

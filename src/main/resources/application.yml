@@ -1,0 +1,5 @@
+okta:
+  oauth2:
+    issuer: https://dev-a8r1yiyi25elpkyu.uk.auth0.com/
+    client-id: pZAmz9gO6MizLu46mIdZhD94374pmRfU
+    client-secret: dUxzjaIY1G4Q7uJHM4z659jBHePEZ9NI81S7b33MCkxuRltOQdWDxw97xiujmFAk

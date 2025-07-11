@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MakersBnB</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <div class="space-container">
+      <div class="space-details-dates">
+
+        <div class="space-header">
+          <h1 class="space-name" th:text="${space.name}"></h1>
+          <p class="space-description" th:text="${space.description}"></p>
+          <p class="space-price" th:text="'£' + ${space.price} + ' per night'"></p>
+          <p class="space-rules" th:text="'Rules: ' + ${space.rules}"></p>
+        </div>
+
+        <div class="available-dates">
+          <h3>Available Dates</h3>
+          <div th:if="${#lists.isEmpty(space.availableDates)}">
+            <p class="no-dates">No dates currently available</p>
+          </div>
+          <div th:unless="${#lists.isEmpty(space.availableDates)}">
+            <p>Click on a date to book:</p>
+            <div class="dates-grid">
+              <div th:each="date : ${space.availableDates}"
+                   class="date-item"
+                   th:text="${#temporals.format(date, 'EEE dd/MM')}"
+                   th:title="${#temporals.format(date, 'EEEE dd MMMM yyyy')}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="back-link">
+        <a th:href="@{/spaces}" class="btn">← Back to All Spaces</a>
+      </div>
+    </div>
+</body>
+</html>
